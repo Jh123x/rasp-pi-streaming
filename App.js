@@ -8,10 +8,9 @@ class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ClickerApp />
-        <Test />
+        <ClickerApp style={{flex: 0.25}} />
+        <Test style={{flex: 0.25}}/>
       </View>
-      
     );
   }
 }
@@ -21,7 +20,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignContent: "center",
     justifyContent: "center",
-    flex: 0.5
+    flex: 1
   }
 })
 
