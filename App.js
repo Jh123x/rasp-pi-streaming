@@ -9,18 +9,29 @@ import {
   Button,
   Alert,
   Platform,
-  StatusBar,
+  View,
+  Dimensions, // Doesnt respond to orientation changes
+  FlexStyle
 } from "react-native";
 
 export default function App() {
   const handlePress = () => console.log("Clicked");
+  console.log(Dimensions.get("window"));
+  console.log(Dimensions.get("screen"));
   return (
     <SafeAreaView style={[styles.container, containerStyle]}>
+      <SafeAreaView style={styles.container, containerStyle}>
+      <View style={{
+        backgroundColor: "dodgerBlue",
+        width: '50%',
+        height: '30%'
+      }}></View>
+    </SafeAreaView>
       <Text onPress={handlePress}>Hello World</Text>
       {/* <Image source={require("./assets/icon.png")}/> */}
       <TouchableHighlight onPress={handlePress}>
         <Image
-          blurRadius={0}
+          blurRadius={1}
           source={{
             width: 200,
             height: 300,
@@ -48,6 +59,7 @@ export default function App() {
           )
         }
       />
+      {/* <Image source={require("./assets/splash.png")}/> */}
       <StatusBar style="auto" />
     </SafeAreaView>
   );
@@ -60,9 +72,9 @@ const containerStyle = {
 const styles = StyleSheet.create({
   container: {
     flex: 1, // Can grow to fit the area
-    // backgroundColor: "#fff", // Color of the background
+    backgroundColor: "#fff", // Color of the background
     alignItems: "center", // Align the properties at the center
     justifyContent: "center", // Put the text justified towards the center
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    // paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });
