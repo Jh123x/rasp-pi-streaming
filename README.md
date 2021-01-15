@@ -1,3 +1,4 @@
-# react-native-tutorial
+# Stream youtube video to Rasppi
  
-This is just a playground for me to try out different components of react-native and to make an application based on that
+Sending youtube link from the frontend to the backend to be send to the raspberry pi to play the video.
+Front end application
