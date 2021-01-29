@@ -1,8 +1,6 @@
 const send_data = async (data, ip) => {
     //  Send data to the raspberry pi
     data = JSON.stringify(data);
-    console.log(data);
-    console.log(ip);
     return fetch("http://" + ip + ":8080/video", {
         method: 'POST',
         headers: {
