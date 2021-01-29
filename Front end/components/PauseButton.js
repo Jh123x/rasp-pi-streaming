@@ -1,12 +1,11 @@
 import React from "react";
-import send_data from './sendData';
 import { Button, StyleSheet } from "react-native";
 
 
 const PauseButton = (prop) => {
   return (
     <Button
-      title="Pause"
+      title="Pause/Resume"
       style={styles.button}
       onPress={prop.onPress}
     />
