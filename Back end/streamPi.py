@@ -7,7 +7,6 @@ from flask import request, jsonify
 app = flask.Flask(__name__)
 curr_process = None
 
-
 @app.route('/')
 def index():
 	return "<h1>It is working</h1>"
@@ -18,9 +17,28 @@ def stream_video():
 	data = request.get_json()
 	print(data)
 	url = data.get('url')
-	if curr_process:
-		curr_process.terminate()
-	curr_process = subprocess.Popen(["cvlc", "--fullscreen", url])
+	pause = data.get('pause', None)
+	resume = data.get('resume', None)
+
+	# Check if the player wants to pause
+	if pause:
+		os.system('dbus-send --type=method_call --dest=org.mpris.MediaPlayer2.vlc /org/mpris/MediaPlayer2   org.mpris.MediaPlayer2.Player.PlayPause')
+
+	# Check if player wants to resume
+	elif resume:
+		os.system('dbus-send --type=method_call --dest=org.mpris.MediaPlayer2.vlc /org/mpris/MediaPlayer2   org.mpris.MediaPlayer2.Player.Play')
+
+	# Check the url
+	else:
+
+		# Close the current subprocess if there is one runnning
+		if curr_process:
+			curr_process.terminate()
+
+		# Reopen Vlc in full screen
+		curr_process = subprocess.Popen(["cvlc", "--fullscreen", url])
+
+
 	return jsonify(data)
 
 
