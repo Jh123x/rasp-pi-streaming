@@ -1,28 +1,17 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { View, StyleSheet, TextInput, Button, Alert } from "react-native";
-
-const send_data = async (data) => {
-  //  Send data to the raspberry pi
-  data = JSON.stringify(data);
-  console.log(data);
-  return fetch("http://192.168.1.184:8080/video", {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'Content-Length': 105,
-    },
-    body: data,
-  }).then(response => response.json()).catch(error => { console.log(error) });
-}
+import PauseButton from "./components/PauseButton";
+import send_data from "./components/sendData";
 
 class App extends React.Component {
+  ip = null;
   state = {
     url: "",
-    pause: false,
-    resume: false
   };
+
+  setIP(value) {
+    this.ip = value;
+  }
 
   setState(value) {
     this.state = {
@@ -35,28 +24,37 @@ class App extends React.Component {
       <View style={styles.container}>
         <TextInput
           style={styles.textinput}
+          placeholder="IP"
+          onChangeText={(value) => this.setIP(value)}
+        />
+        <TextInput
+          style={styles.textinput}
           placeholder="Link here"
           onChangeText={(value) => this.setState({ url: value })}
         />
         <Button
           title="Play Video"
+          onPress={() => send_data(this.state.url, this.ip)}
+        />
+        <PauseButton
           onPress={() =>
-            send_data(this.state.url)
+            send_data(
+              {
+                pause: true,
+                resume: false,
+              },
+              this.ip
+            )
           }
         />
         <Button
-          title="Pause"
-          onPress={() => send_data({
-            pause: true,
-            resume: false
-          })}
-        />
-        <Button
           title="Resume"
-          onPress={() => send_data({
-            resume: true,
-            pause: false
-          })}
+          onPress={() =>
+            send_data({
+              resume: true,
+              pause: false,
+            })
+          }
         />
       </View>
     );
@@ -72,9 +70,10 @@ const styles = StyleSheet.create({
   },
   textinput: {
     alignItems: "center",
-    height: 30,
+    height: 60,
     width: 300,
     fontSize: 30,
+    padding: 10,
   },
 });
 
