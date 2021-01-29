@@ -13,9 +13,12 @@ def index():
 
 @app.route('/video', methods=['POST'])
 def stream_video():
+
+	# Not the best practice
 	global curr_process
+
+	# Get the data
 	data = request.get_json()
-	print(data)
 	url = data.get('url')
 	pause = data.get('pause', None)
 	resume = data.get('resume', None)
@@ -38,7 +41,7 @@ def stream_video():
 		# Reopen Vlc in full screen
 		curr_process = subprocess.Popen(["cvlc", "--fullscreen", url])
 
-
+	# Send the json data
 	return jsonify(data)
 
 
