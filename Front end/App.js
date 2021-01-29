@@ -19,12 +19,14 @@ const send_data = async (data) => {
 
 class App extends React.Component {
   state = {
-    textInputValue: "",
+    url: "",
+    pause: false,
+    resume: false
   };
 
   setState(value) {
     this.state = {
-      textInputValue: value,
+      url: value,
     };
   }
 
@@ -37,10 +39,24 @@ class App extends React.Component {
           onChangeText={(value) => this.setState({ url: value })}
         />
         <Button
-          title="Click me"
+          title="Play Video"
           onPress={() =>
-            send_data(this.state.textInputValue)
+            send_data(this.state.url)
           }
+        />
+        <Button
+          title="Pause"
+          onPress={() => send_data({
+            pause: true,
+            resume: false
+          })}
+        />
+        <Button
+          title="Resume"
+          onPress={() => send_data({
+            resume: true,
+            pause: false
+          })}
         />
       </View>
     );
