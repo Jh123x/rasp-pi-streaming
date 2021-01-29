@@ -1,7 +1,7 @@
 import React from "react";
-import { View, StyleSheet, TextInput, Button, Alert } from "react-native";
+import send_data from "./functions/sendData";
 import PauseButton from "./components/PauseButton";
-import send_data from "./components/sendData";
+import { View, StyleSheet, TextInput, Button} from "react-native";
 
 class App extends React.Component {
   ip = null;
@@ -45,15 +45,6 @@ class App extends React.Component {
               },
               this.ip
             )
-          }
-        />
-        <Button
-          title="Resume"
-          onPress={() =>
-            send_data({
-              resume: true,
-              pause: false,
-            })
           }
         />
       </View>
