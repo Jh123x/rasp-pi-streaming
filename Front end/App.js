@@ -1,8 +1,10 @@
 import React from "react";
-import checkBeforeSend from "./functions/checkBeforeSend";
+import styles from "./styles/mainStyle";
+import IPInput from "./components/IPInput";
+import LinkInput from "./components/LinkInput";
+import { View, Button, Alert } from "react-native";
 import PauseButton from "./components/PauseButton";
-import { View, StyleSheet, TextInput, Button, Alert } from "react-native";
-
+import checkBeforeSend from "./functions/checkBeforeSend";
 
 class App extends React.Component {
   ip = null;
@@ -11,7 +13,12 @@ class App extends React.Component {
   };
 
   send_data(input, ip) {
-    return checkBeforeSend(ip, input) ? null : Alert.alert("Invalid IP", "Ip address " + this.ip + " is invalid!");
+    return checkBeforeSend(ip, input)
+      ? null
+      : Alert.alert(
+          "Invalid IP",
+          "IP address: '" + (this.ip ? this.ip : " ") + "' is invalid!"
+        );
   }
 
   setIP(value) {
@@ -26,17 +33,9 @@ class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <TextInput
-          style={styles.textinput}
-          placeholder="IP"
-          onChangeText={(value) => this.setIP(value)}
-        />
-        <TextInput
-          style={styles.textinput}
-          placeholder="Link here"
-          onChangeText={(value) => this.setState({ url: value })}
-        />
+      <View style={styles.main_container}>
+        <IPInput onPress={(value) => this.setIP(value)} />
+        <LinkInput onPress={(value) => this.setState({ url: value })} />
         <Button
           title="Play Video"
           onPress={() => this.send_data(this.state.url, this.ip)}
@@ -56,21 +55,5 @@ class App extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    alignContent: "center",
-    justifyContent: "center",
-    flex: 1,
-  },
-  textinput: {
-    alignItems: "center",
-    height: 60,
-    width: 300,
-    fontSize: 30,
-    padding: 10,
-  },
-});
 
 export default App;
