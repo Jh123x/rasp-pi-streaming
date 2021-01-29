@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "react-native-tutorial",
-    "slug": "react-native-tutorial",
-    "version": "1.0.0",
+    "name": "Stream 2 pi",
+    "slug": "Stream-2-pi",
+    "version": "1.0.1",
     "orientation": "default",
     "icon": "./assets/icon.png",
     "splash": {
