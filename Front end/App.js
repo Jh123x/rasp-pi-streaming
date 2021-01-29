@@ -1,13 +1,18 @@
 import React from "react";
-import send_data from "./functions/sendData";
+import checkBeforeSend from "./functions/checkBeforeSend";
 import PauseButton from "./components/PauseButton";
-import { View, StyleSheet, TextInput, Button} from "react-native";
+import { View, StyleSheet, TextInput, Button, Alert } from "react-native";
+
 
 class App extends React.Component {
   ip = null;
   state = {
     url: "",
   };
+
+  send_data(input, ip) {
+    return checkBeforeSend(ip, input) ? null : Alert.alert("Invalid IP", "Ip address " + this.ip + " is invalid!");
+  }
 
   setIP(value) {
     this.ip = value;
@@ -34,11 +39,11 @@ class App extends React.Component {
         />
         <Button
           title="Play Video"
-          onPress={() => send_data(this.state.url, this.ip)}
+          onPress={() => this.send_data(this.state.url, this.ip)}
         />
         <PauseButton
           onPress={() =>
-            send_data(
+            this.send_data(
               {
                 pause: true,
                 resume: false,
